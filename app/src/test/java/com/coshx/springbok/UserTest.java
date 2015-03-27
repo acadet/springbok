@@ -1,7 +1,6 @@
 package com.coshx.springbok;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -13,12 +12,12 @@ public class UserTest {
 
     @Test
     public void UserNameTest() {
-        User u = new User();
+            User u = new User();
 
-        u.setName("foo");
+            u.setName("foo");
 
-        Assert.assertEquals("foo", u.getName());
-    }
+            Assert.assertEquals("foo", u.getName());
+        }
 
     // Uncomment test below for testing failed builds
     //    @Test

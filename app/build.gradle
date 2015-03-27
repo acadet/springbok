@@ -11,7 +11,6 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -28,11 +27,14 @@ android {
         }
     }
 
+    productFlavors {
+        unitTest
+    }
+
     sourceSets {
-        androidTest {
+        unitTest {
             java {
-                srcDir 'src/androidTest/java'
-                srcDir 'src/test/java' // Only for showing test folder in editor
+                srcDir 'src/test/java'
             }
         }
     }
@@ -43,6 +45,16 @@ android {
 
     // Exclude Roboelectrics license file conflicts
     packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
         exclude 'LICENSE.txt'
         exclude 'LICENSE'
     }
@@ -56,19 +68,17 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
 
-    // Only for editor
-    androidTestCompile 'org.robolectric:robolectric:2.4'
-    androidTestCompile 'org.hamcrest:hamcrest-core:1.1'
-    androidTestCompile 'org.hamcrest:hamcrest-library:1.1'
-    androidTestCompile 'org.hamcrest:hamcrest-integration:1.1'
-
     // Unit testing dependencies
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.hamcrest:hamcrest-core:1.1'
-    testCompile 'org.hamcrest:hamcrest-library:1.1'
-    testCompile 'org.hamcrest:hamcrest-integration:1.1'
+    unitTestCompile('junit:junit:4.12') {
+        exclude module: 'hamcrest-core'
+        exclude module: 'hamcrest-library'
+        exclude module: 'hamcrest-integration'
+    }
+    unitTestCompile 'org.hamcrest:hamcrest-core:1.1'
+    unitTestCompile 'org.hamcrest:hamcrest-library:1.1'
+    unitTestCompile 'org.hamcrest:hamcrest-integration:1.1'
 
-    testCompile('org.robolectric:robolectric:2.4') {
+    unitTestCompile('org.robolectric:robolectric:2.4') {
         exclude module: 'classworlds'
         exclude module: 'commons-logging'
         exclude module: 'httpclient'
@@ -129,7 +139,7 @@ def coverageSourceDirs = [
         '../app/src'
 ]
 
-task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
+task jacocoTestReport(type: JacocoReport, dependsOn: "test") {
     group = "Reporting"
 
     description = "Generate Jacoco coverage reports"
@@ -145,7 +155,7 @@ task jacocoTestReport(type: JacocoReport, dependsOn: "testDebug") {
 
     additionalSourceDirs = files(coverageSourceDirs)
     sourceDirectories = files(coverageSourceDirs)
-    executionData = files('../app/build/jacoco/testDebug.exec')
+    executionData = files('../app/build/jacoco/testUnitTestDebug.exec')
 
     reports {
         xml.enabled = true
