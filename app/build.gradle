@@ -13,11 +13,25 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    sourceSets {
+        androidTest {
+            java {
+                srcDir 'src/androidTest/java'
+                srcDir 'src/test/java' // Only for showing test folder in editor
+            }
+        }
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     // Exclude Roboelectrics license file conflicts
@@ -34,6 +48,12 @@ dependencies {
     // Espresso
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+
+    // Only for editor
+    androidTestCompile 'org.robolectric:robolectric:2.4'
+    androidTestCompile 'org.hamcrest:hamcrest-core:1.1'
+    androidTestCompile 'org.hamcrest:hamcrest-library:1.1'
+    androidTestCompile 'org.hamcrest:hamcrest-integration:1.1'
 
     // Unit testing dependencies
     testCompile 'junit:junit:4.12'
@@ -60,3 +80,31 @@ dependencies {
     }
 }
 
+// Roboeletric config
+robolectric {
+    // Configure includes / excludes
+    include '**/*Test.class'
+    exclude '**/espresso/**/*.class'
+
+    // Configure max heap size of the test JVM
+    maxHeapSize = '2048m'
+
+    // Configure the test JVM arguments - Does not apply to Java 8
+    jvmArgs '-XX:MaxPermSize=512m', '-XX:-UseSplitVerifier'
+
+    // Specify max number of processes (default is 1)
+    maxParallelForks = 4
+
+    // Specify max number of test classes to execute in a test process
+    // before restarting the process (default is unlimited)
+    forkEvery = 150
+
+    // configure whether failing tests should fail the build
+    ignoreFailures false
+
+    // use afterTest to listen to the test execution results
+    afterTest { descriptor, result ->
+        println "Executing test for ${descriptor.name} with result: ${result.resultType}"
+    }
+}
+//end Roboeletric config
