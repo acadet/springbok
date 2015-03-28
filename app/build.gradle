@@ -28,22 +28,23 @@ android {
     }
 
     productFlavors {
-        unitTest
+        unitTest // Creates a new scope which wraps only unit tests
     }
 
     sourceSets {
         unitTest {
             java {
-                srcDir 'src/test/java'
+                srcDir 'src/test/java' // New scope includes our uni test folder
             }
         }
     }
 
     lintOptions {
+        // I prefer avoiding a build fail if there is any warning, for they are only warnings
         abortOnError false
     }
 
-    // Exclude Roboelectrics license file conflicts
+    // Prevent conflicts between Roboelectric's dependencies
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -69,7 +70,7 @@ dependencies {
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
 
     // Unit testing dependencies
-    unitTestCompile('junit:junit:4.12') {
+    unitTestCompile('junit:junit:4.12') { // Prevent duplication conflicts
         exclude module: 'hamcrest-core'
         exclude module: 'hamcrest-library'
         exclude module: 'hamcrest-integration'
@@ -135,6 +136,8 @@ jacoco {
     toolVersion = "0.7.1.201405082137"
 }
 
+// Edit covered scope if needed
+// For my part I like having the coverage of both application and tests
 def coverageSourceDirs = [
         '../app/src'
 ]
