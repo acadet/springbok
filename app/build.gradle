@@ -34,7 +34,7 @@ android {
     sourceSets {
         unitTest {
             java {
-                srcDir 'src/test/java' // New scope includes our uni test folder
+                srcDir 'src/test/java' // New scope includes our unit test folder
             }
         }
     }
