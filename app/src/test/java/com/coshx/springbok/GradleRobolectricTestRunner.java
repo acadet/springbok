@@ -12,10 +12,10 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * @class GradleRoboletricTestRunner
+ * @class GradleRobolectricTestRunner
  * @brief
  */
-public class GradleRoboletricTestRunner extends RobolectricTestRunner {
+public class GradleRobolectricTestRunner extends RobolectricTestRunner {
     private static final String PROJECT_DIR =
         getProjectDirectory();
 
@@ -31,7 +31,7 @@ public class GradleRoboletricTestRunner extends RobolectricTestRunner {
     private static final int MAX_SDK_SUPPORTED_BY_ROBOLECTRIC =
         Build.VERSION_CODES.JELLY_BEAN_MR2;
 
-    public GradleRoboletricTestRunner(final Class<?> testClass) throws Exception {
+    public GradleRobolectricTestRunner(final Class<?> testClass) throws Exception {
         super(testClass);
     }
 

@@ -11,7 +11,7 @@ import org.robolectric.Robolectric;
  * @class MainActivityTest
  * @brief
  */
-@RunWith(GradleRoboletricTestRunner.class)
+@RunWith(GradleRobolectricTestRunner.class)
 public class MainActivityTest {
     private MainActivity _activity;
 
