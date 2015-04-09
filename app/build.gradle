@@ -28,6 +28,7 @@ android {
     }
 
     productFlavors {
+        app // Default flavor
         unitTest // Creates a new scope which wraps only unit tests
     }
 
@@ -44,7 +45,7 @@ android {
         abortOnError false
     }
 
-    // Prevent conflicts between Roboelectric's dependencies
+    // Prevent conflicts between Robolectric's dependencies
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES.txt'
         exclude 'META-INF/LICENSE.txt'
@@ -98,7 +99,7 @@ dependencies {
     }
 }
 
-// Roboeletric config
+// Robolectric config
 robolectric {
     // Configure includes / excludes
     include '**/*Test.class'
@@ -125,7 +126,7 @@ robolectric {
         println "Executing test for ${descriptor.name} with result: ${result.resultType}"
     }
 }
-//end Roboeletric config
+//end Robolectric config
 
 // Jacoco config
 apply plugin: 'jacoco'
